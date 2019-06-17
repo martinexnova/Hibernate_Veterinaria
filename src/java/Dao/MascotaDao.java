@@ -37,9 +37,10 @@ public class MascotaDao implements IMascota{
     }
 
     @Override
-    public ArrayList<Mascota> listarMascota(Session sesion) {
+    public ArrayList<Mascota> listarMascota() {
+          Session session =HibernateUtil.geSessionFactory().openSession();
           ArrayList<Mascota> milista=new ArrayList<>();
-        Query query=sesion.createQuery("FROM Mascota");
+        Query query=session.createQuery("FROM Mascota");
         //ejecutar la consulta y obtener la listaz
         milista=(ArrayList<Mascota>) query.list();
         return milista;
@@ -48,19 +49,20 @@ public class MascotaDao implements IMascota{
     @Override
     public boolean actualizar(Mascota mascota) {
         
-        Session session =HibernateUtil.geSessionFactory().openSession();
-         Transaction transaction=session.beginTransaction();
-          boolean update=false;
-          int res = 0;
+         Session session =HibernateUtil.geSessionFactory().openSession();
+        
+            boolean respuesta= true;
+        
+        
+        Transaction transaccion = session.beginTransaction();
+        try{
         session.update(mascota);
-         if(res==1){
-                 update=true; 
-              }
-          transaction.commit();
+        transaccion.commit();
+        } catch (Exception e) {
+            respuesta = false;
+        }
         session.close();
-         
-         
-return update;
+        return respuesta;
     }
 
     @Override
@@ -90,6 +92,22 @@ return update;
         
     }
 
+    @Override
+    public boolean eliminar(Mascota mascota) {
+        boolean respuesta = true;
+         Session session =HibernateUtil.geSessionFactory().openSession();
+        Transaction transaccion = session.beginTransaction();
+        try {
+            session.delete(mascota);
+            transaccion.commit();
+        } catch (Exception e) {
+            respuesta = false;
+            System.out.println("error"+e);
+        }
+        session.close();
+        return respuesta;
+
+    }
   
     }
 
