@@ -58,7 +58,15 @@
 
                             </p:column>
                             <p:column>
-                                <p:calendar  locale="es"/>
+                                <p:calendar value="#{ClienteBean.cliente.fechanac}"  locale="es" effect="explode"/>
+                            </p:column>
+                        </p:row>
+                             <p:row>
+                            <p:column>
+                                <p:outputLabel value="TELEFONO"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText value="#{ClienteBean.cliente.telefono}"/>
                             </p:column>
                         </p:row>
                         <p:row>
@@ -84,7 +92,7 @@
                 </p:panel>
             </h:form>
               <h:form id="formdata">
-                  <p:dataTable  rowKey="#{cliente.idCliente}" selection="#{ClienteBean.cliente}"  selectionMode="single" id="datatable" style="width: 55%" var="cliente" value="#{ClienteBean.listar()}">
+                  <p:dataTable  rowKey="#{cliente.idCliente}" selection="#{ClienteBean.cliente}"  selectionMode="single" id="datatable" style="width: 60%" var="cliente" value="#{ClienteBean.listar()}">
                     <p:ajax event="rowSelect" update=":form"/>
                     <p:column headerText="ID:">
 
@@ -98,6 +106,9 @@
                     </p:column>
                     <p:column headerText="Fecha de Nacimiento">
                         <p:outputLabel value="#{cliente.fechanac}"/>
+                    </p:column>
+                    <p:column headerText="Telefono">
+                        <p:outputLabel value="#{cliente.telefono}"/>
                     </p:column>
                     <p:column headerText="Direcion">
                         <p:outputLabel value="#{cliente.direcion}"/>
@@ -127,7 +138,7 @@
         </ui:define>
 
         </ui:composition>
-        <h:outputScript library="js" name="locales.js"/>
+       
     </h:body>
 </html>
 

@@ -1,5 +1,5 @@
 package entidades;
-// Generated 23/06/2019 08:42:36 PM by Hibernate Tools 4.3.1
+// Generated 24/06/2019 12:04:34 AM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -14,17 +14,19 @@ public class Cliente  implements java.io.Serializable {
      private String nombre;
      private String apellido;
      private Date fechanac;
+     private int telefono;
      private String direcion;
      private String gmail;
 
     public Cliente() {
     }
 
-    public Cliente(int idCliente, String nombre, String apellido, Date fechanac, String direcion, String gmail) {
+    public Cliente(int idCliente, String nombre, String apellido, Date fechanac, int telefono, String direcion, String gmail) {
        this.idCliente = idCliente;
        this.nombre = nombre;
        this.apellido = apellido;
        this.fechanac = fechanac;
+       this.telefono = telefono;
        this.direcion = direcion;
        this.gmail = gmail;
     }
@@ -56,6 +58,13 @@ public class Cliente  implements java.io.Serializable {
     
     public void setFechanac(Date fechanac) {
         this.fechanac = fechanac;
+    }
+    public int getTelefono() {
+        return this.telefono;
+    }
+    
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
     }
     public String getDirecion() {
         return this.direcion;
