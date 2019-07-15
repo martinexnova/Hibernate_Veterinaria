@@ -14,24 +14,19 @@ import org.hibernate.cfg.AnnotationConfiguration;
  * @author MARTIN
  */
 public class HibernateUtil {
- private static final SessionFactory sessionFactory;
+    private static final SessionFactory sessionFactory;
+
     static {
         try {
-            //
-            //
-         sessionFactory =new AnnotationConfiguration().configure().buildSessionFactory();
-         
-        } catch (Exception e) {
-               System.err.println("Initial sessionFactory creation faild." +e);
-               throw new ExceptionInInitializerError(e);
-               
+            sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+
+        } catch (Throwable ex) {
+            System.out.println("Initial SessionFactory creation failed." + ex);
+            throw new ExceptionInInitializerError(ex);
         }
     }
-    public static  SessionFactory geSessionFactory(){
-        return  sessionFactory;
-    }
 
-    public static Object getSessionFactory() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 }

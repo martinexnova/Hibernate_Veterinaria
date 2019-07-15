@@ -23,7 +23,7 @@ public class prueba2 {
     public static void main(String[] args) {
               ArrayList<Mascota> lista=new ArrayList<>();
         MascotaDao mascotadao=new MascotaDao();
-        Session sesion =HibernateUtil.geSessionFactory().openSession();
+        Session sesion =HibernateUtil.getSessionFactory().openSession();
        lista = mascotadao.listarMascota();
        for(Mascota mascota:lista){
            System.out.println(mascota.getNombreMascota());

@@ -3,53 +3,46 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package managerBean;
+package managedBean;
 
-import Dao.MascotaDao;
-;
-import entidades.Mascota;
+import Dao.ClienteDao;
+import entidades.Cliente;
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.faces.application.FacesMessage;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 
-
 /**
  *
  * @author MARTIN
  */
-
-
-@ManagedBean(name = "MascotaBean")
+@ManagedBean(name = "ClienteBean") 
 @ViewScoped
-public class MascotaBean {
+public class ClienteBean implements Serializable{
 
-    Mascota mascota;
-
-    /**
-     * Creates a new instance of MascotaBean
-     */
-    public MascotaBean() {
-  this.mascota=new Mascota();
+  private Cliente cliente;
+    public ClienteBean() {
+        this.cliente=new Cliente();
     }
 
-    public Mascota getMascota() {
-        return mascota;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setMascota(Mascota mascota) {
-        this.mascota = mascota;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public String guardarMascota() {
+   
+    public String guardarCliente() {
 
      try {
 
-            MascotaDao mascotaDao = new MascotaDao();
-            boolean respuesta= mascotaDao.guardarMascota(mascota);
+            ClienteDao  clienteDao=new ClienteDao();
+            boolean respuesta= clienteDao.guardarCliente(cliente);
             if(respuesta){
                 FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("correcto", "regidtro exitoso"));
             }else{
@@ -57,17 +50,16 @@ public class MascotaBean {
             }
         } catch (HibernateException e) {
             ///transation.rollback();  -- regresa a la anterior
-            System.out.println("Error::: " + e);
+            System.out.println("Erroreeewewewew::: " + e);
         }
-        return "/index";
+        return "/RegistrarCliente";
     }
-
-    public String actualizarMascota() {
+        public String actualizarCliente() {
 
     
         try {
-            MascotaDao mascotadao = new MascotaDao();
-            boolean respuesta = mascotadao.actualizar(mascota);
+            ClienteDao clienteDao = new ClienteDao();
+            boolean respuesta = clienteDao.actualizarCliente(cliente);
             if(respuesta){
                 FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("correcto", "regidtro exitoso"));
             }else{
@@ -75,35 +67,33 @@ public class MascotaBean {
             }
         } catch (Exception e) {
             
-            System.out.println("");
+            System.out.println(" erroasasas"+e);
         }
-        return "/index";
+        return "/RegistrarCliente";
     }
+      public ArrayList<Cliente> listar() {
 
-    public ArrayList<Mascota> listar() {
+        ArrayList<Cliente> lista = new ArrayList<>();
 
-        ArrayList<Mascota> lista = new ArrayList<>();
-
-        MascotaDao mascotadao = new MascotaDao();
-        lista = mascotadao.listarMascota();
+        ClienteDao clienteDao = new ClienteDao();
+        lista = clienteDao.listarCliente();
 
         return lista;
 
     }
-    public  String limpiar(){
-        return "/index";
+      public  String limpiar(){
+        return "/RegistrarCliente";
     }
-    public String eliminarMascota(){
-         MascotaDao dao = new MascotaDao();
-            boolean respuesta= dao.eliminar(mascota);
+          public String eliminarCliente(){
+         ClienteDao dao = new ClienteDao();
+            boolean respuesta= dao.eliminarCliente(cliente);
             if(respuesta){
                 
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Correcto","Registro Borrado con exito"));
             }else{
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error","No se pudo eliminar"));
             }
-            return "/index.xhtml";
+            return "/RegistrarCliente.xhtml";
         
     }
-
 }

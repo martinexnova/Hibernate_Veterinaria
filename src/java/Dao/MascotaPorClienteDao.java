@@ -6,10 +6,10 @@
 package Dao;
 
 import Utilitarios.HibernateUtil;
-import entidades.Cliente;
-
-import interfaces.ICliente;
+import entidades.Mascotaporcliente;
+import interfaces.IMascotaPorCliente;
 import java.util.ArrayList;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -18,15 +18,15 @@ import org.hibernate.Transaction;
  *
  * @author MARTIN
  */
-public class ClienteDao implements ICliente{
+public class MascotaPorClienteDao implements IMascotaPorCliente{
 
     @Override
-    public boolean guardarCliente(Cliente cliente) {
-             boolean respuesta=true;
+    public boolean guardarMascotaPorCliente(Mascotaporcliente mascotaporcliente) {
+           boolean respuesta=true;
       Session session =HibernateUtil.getSessionFactory().openSession();
      Transaction transaction=session.beginTransaction();
         try {
-            session.save(cliente);
+            session.save(mascotaporcliente);
              transaction.commit();
         } catch (Exception e) {
             respuesta=false;
@@ -34,45 +34,47 @@ public class ClienteDao implements ICliente{
     
         session.close();
         return respuesta;
+    
     }
 
     @Override
-    public ArrayList<Cliente> listarCliente() {
-              Session session =HibernateUtil.getSessionFactory().openSession();
-          ArrayList<Cliente> milista=new ArrayList<>();
-        Query query=session.createQuery("FROM Cliente");
-        //ejecutar la consulta y obtener la listaz
-        milista=(ArrayList<Cliente>) query.list();
-         session.close();
-        return milista;
-    }
-
-    @Override
-    public boolean actualizarCliente(Cliente cliente) {
+    public ArrayList<Mascotaporcliente> listarMascotaPorCliente() {
         Session session =HibernateUtil.getSessionFactory().openSession();
+          ArrayList<Mascotaporcliente> milista=new ArrayList<>();
+        Query query=session.createQuery("FROM Mascotaporcliente");
+        //ejecutar la consulta y obtener la listaz
+        milista=(ArrayList<Mascotaporcliente>) query.list();
+        session.close();
+        return milista; 
+    }
+
+    @Override
+    public boolean actualizar(Mascotaporcliente mascotaporcliente) {
+                
+         Session session =HibernateUtil.getSessionFactory().openSession();
         
             boolean respuesta= true;
         
         
         Transaction transaccion = session.beginTransaction();
         try{
-        session.update(cliente);
+        session.update(mascotaporcliente);
         transaccion.commit();
         } catch (Exception e) {
-            System.out.println(" error"+e);
             respuesta = false;
+            System.out.println("ERORORR"+e);
         }
         session.close();
         return respuesta;
     }
 
     @Override
-    public boolean eliminarCliente(Cliente cliente) {
-           boolean respuesta = true;
+    public boolean eliminar(Mascotaporcliente mascotaporcliente) {
+         boolean respuesta = true;
          Session session =HibernateUtil.getSessionFactory().openSession();
         Transaction transaccion = session.beginTransaction();
         try {
-            session.delete(cliente);
+            session.delete(mascotaporcliente);
             transaccion.commit();
         } catch (Exception e) {
             respuesta = false;
@@ -80,8 +82,9 @@ public class ClienteDao implements ICliente{
         }
         session.close();
         return respuesta;
-
     }
-    
-    
-}
+  
+    }
+
+
+   

@@ -23,7 +23,7 @@ public class prueba7 {
       int contar;
         MascotaDao mascotadao = new MascotaDao();
 
-  Session sesion =HibernateUtil.geSessionFactory().openSession();
+  Session sesion =HibernateUtil.getSessionFactory().openSession();
 
         contar = mascotadao.contarResgistro(sesion);
        JOptionPane.showMessageDialog(null,"cantidad de registro :" + contar );

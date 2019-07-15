@@ -6,9 +6,9 @@
 package Dao;
 
 import Utilitarios.HibernateUtil;
-import entidades.Cliente;
+import entidades.Perfil;
 
-import interfaces.ICliente;
+import interfaces.IPerfil;
 import java.util.ArrayList;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -18,18 +18,19 @@ import org.hibernate.Transaction;
  *
  * @author MARTIN
  */
-public class ClienteDao implements ICliente{
+public class PerfilDao implements IPerfil{
 
     @Override
-    public boolean guardarCliente(Cliente cliente) {
+    public boolean guardarPerfil(Perfil perfil) {
              boolean respuesta=true;
       Session session =HibernateUtil.getSessionFactory().openSession();
      Transaction transaction=session.beginTransaction();
         try {
-            session.save(cliente);
+            session.save(perfil);
              transaction.commit();
         } catch (Exception e) {
             respuesta=false;
+            System.out.println("erroradasdsadasfdsgdsgssdssddd"+e);
         }
     
         session.close();
@@ -37,18 +38,18 @@ public class ClienteDao implements ICliente{
     }
 
     @Override
-    public ArrayList<Cliente> listarCliente() {
+    public ArrayList<Perfil> listarPerfil() {
               Session session =HibernateUtil.getSessionFactory().openSession();
-          ArrayList<Cliente> milista=new ArrayList<>();
-        Query query=session.createQuery("FROM Cliente");
+          ArrayList<Perfil> milista=new ArrayList<>();
+        Query query=session.createQuery("FROM Perfil");
         //ejecutar la consulta y obtener la listaz
-        milista=(ArrayList<Cliente>) query.list();
+        milista=(ArrayList<Perfil>) query.list();
          session.close();
         return milista;
     }
 
     @Override
-    public boolean actualizarCliente(Cliente cliente) {
+    public boolean actualizarPerfil(Perfil perfil) {
         Session session =HibernateUtil.getSessionFactory().openSession();
         
             boolean respuesta= true;
@@ -56,7 +57,7 @@ public class ClienteDao implements ICliente{
         
         Transaction transaccion = session.beginTransaction();
         try{
-        session.update(cliente);
+        session.update(perfil);
         transaccion.commit();
         } catch (Exception e) {
             System.out.println(" error"+e);
@@ -67,12 +68,12 @@ public class ClienteDao implements ICliente{
     }
 
     @Override
-    public boolean eliminarCliente(Cliente cliente) {
+    public boolean eliminarPerfil(Perfil perfil) {
            boolean respuesta = true;
          Session session =HibernateUtil.getSessionFactory().openSession();
         Transaction transaccion = session.beginTransaction();
         try {
-            session.delete(cliente);
+            session.delete(perfil);
             transaccion.commit();
         } catch (Exception e) {
             respuesta = false;

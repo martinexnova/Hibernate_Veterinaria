@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 24/06/2019 12:04:34 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated 14/07/2019 05:08:27 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="entidades.Cliente" table="cliente" catalog="mascota" optimistic-lock="version">
         <id name="idCliente" type="int">
@@ -17,8 +17,8 @@
         <property name="fechanac" type="date">
             <column name="fechanac" length="10" not-null="true" />
         </property>
-        <property name="telefono" type="int">
-            <column name="telefono" not-null="true" />
+        <property name="telefono" type="string">
+            <column name="telefono" length="9" not-null="true" />
         </property>
         <property name="direcion" type="string">
             <column name="direcion" length="65535" not-null="true" />
@@ -26,5 +26,11 @@
         <property name="gmail" type="string">
             <column name="gmail" length="65535" not-null="true" />
         </property>
+        <set name="mascotaporclientes" table="mascotaporcliente" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="codigoCliente" not-null="true" />
+            </key>
+            <one-to-many class="entidades.Mascotaporcliente" />
+        </set>
     </class>
 </hibernate-mapping>

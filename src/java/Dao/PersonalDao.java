@@ -5,10 +5,11 @@
  */
 package Dao;
 
-import Utilitarios.HibernateUtil;
-import entidades.Cliente;
 
-import interfaces.ICliente;
+import Utilitarios.HibernateUtil;
+import entidades.Mascota;
+import entidades.Personal;
+import interfaces.IPersonal;
 import java.util.ArrayList;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -18,15 +19,15 @@ import org.hibernate.Transaction;
  *
  * @author MARTIN
  */
-public class ClienteDao implements ICliente{
+public class PersonalDao implements IPersonal{
 
     @Override
-    public boolean guardarCliente(Cliente cliente) {
-             boolean respuesta=true;
+    public boolean guardarPersonal(Personal personal) {
+                boolean respuesta=true;
       Session session =HibernateUtil.getSessionFactory().openSession();
      Transaction transaction=session.beginTransaction();
         try {
-            session.save(cliente);
+            session.save(personal);
              transaction.commit();
         } catch (Exception e) {
             respuesta=false;
@@ -34,21 +35,21 @@ public class ClienteDao implements ICliente{
     
         session.close();
         return respuesta;
-    }
+        }
 
     @Override
-    public ArrayList<Cliente> listarCliente() {
-              Session session =HibernateUtil.getSessionFactory().openSession();
-          ArrayList<Cliente> milista=new ArrayList<>();
-        Query query=session.createQuery("FROM Cliente");
+    public ArrayList<Personal> listarPersonal() {
+          Session session =HibernateUtil.getSessionFactory().openSession();
+          ArrayList<Personal> milista=new ArrayList<>();
+        Query query=session.createQuery("FROM Personal");
         //ejecutar la consulta y obtener la listaz
-        milista=(ArrayList<Cliente>) query.list();
-         session.close();
+        milista=(ArrayList<Personal>) query.list();
+        session.close();
         return milista;
-    }
+      }
 
     @Override
-    public boolean actualizarCliente(Cliente cliente) {
+    public boolean actualizarPersonal(Personal personal) {
         Session session =HibernateUtil.getSessionFactory().openSession();
         
             boolean respuesta= true;
@@ -56,23 +57,22 @@ public class ClienteDao implements ICliente{
         
         Transaction transaccion = session.beginTransaction();
         try{
-        session.update(cliente);
+        session.update(personal);
         transaccion.commit();
         } catch (Exception e) {
-            System.out.println(" error"+e);
             respuesta = false;
         }
         session.close();
         return respuesta;
-    }
+       }
 
     @Override
-    public boolean eliminarCliente(Cliente cliente) {
-           boolean respuesta = true;
+    public boolean eliminarPersonal(Personal personal) {
+          boolean respuesta = true;
          Session session =HibernateUtil.getSessionFactory().openSession();
         Transaction transaccion = session.beginTransaction();
         try {
-            session.delete(cliente);
+            session.delete(personal);
             transaccion.commit();
         } catch (Exception e) {
             respuesta = false;
@@ -82,6 +82,8 @@ public class ClienteDao implements ICliente{
         return respuesta;
 
     }
+       }
+
+  
     
-    
-}
+

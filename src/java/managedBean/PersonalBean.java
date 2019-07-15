@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package managerBean;
+package managedBean;
 
-import Dao.ClienteDao;
-import Dao.MascotaDao;
-import entidades.Cliente;
-import entidades.Mascota;
+import Dao.PersonalDao;
+import entidades.Personal;
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -20,30 +19,32 @@ import org.hibernate.HibernateException;
  *
  * @author MARTIN
  */
-@ManagedBean(name = "ClienteBean")
+@ManagedBean(name = "PersonalBean")
 @ViewScoped
-public class ClienteBean {
+public class PersonalBean  implements Serializable{
+     Personal personal;
+      private boolean  banderaSelect=false;
 
-   Cliente cliente;
-    public ClienteBean() {
-        this.cliente=new Cliente();
+    /**
+     * Creates a new instance of MascotaBean
+     */
+    public PersonalBean() {
+  this.personal=new Personal();
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Personal getPersonal() {
+        return personal;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setPersonal(Personal personal) {
+        this.personal = personal;
     }
-
-   
-    public String guardarCliente() {
+    public String guardarPersonal() {
 
      try {
 
-            ClienteDao  clienteDao=new ClienteDao();
-            boolean respuesta= clienteDao.guardarCliente(cliente);
+            PersonalDao personalDao = new PersonalDao();
+            boolean respuesta= personalDao.guardarPersonal(personal);
             if(respuesta){
                 FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("correcto", "regidtro exitoso"));
             }else{
@@ -53,14 +54,15 @@ public class ClienteBean {
             ///transation.rollback();  -- regresa a la anterior
             System.out.println("Error::: " + e);
         }
-        return "/RegistrarCliente";
+        return "/RegistrarPersonal";
     }
-        public String actualizarCliente() {
+
+    public String actualizarPersonal() {
 
     
         try {
-            ClienteDao clienteDao = new ClienteDao();
-            boolean respuesta = clienteDao.actualizarCliente(cliente);
+             PersonalDao personalDao = new PersonalDao();
+            boolean respuesta = personalDao.actualizarPersonal(personal);
             if(respuesta){
                 FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("correcto", "regidtro exitoso"));
             }else{
@@ -70,31 +72,44 @@ public class ClienteBean {
             
             System.out.println("");
         }
-        return "/index";
+        return "/RegistrarPersonal";
     }
-      public ArrayList<Cliente> listar() {
 
-        ArrayList<Cliente> lista = new ArrayList<>();
+    public ArrayList<Personal> listar() {
 
-        ClienteDao clienteDao = new ClienteDao();
-        lista = clienteDao.listarCliente();
+        ArrayList<Personal> lista = new ArrayList<>();
+
+        PersonalDao personalDao = new PersonalDao();
+        lista = personalDao.listarPersonal();
 
         return lista;
 
     }
-      public  String limpiar(){
-        return "/RegistrarCliente";
+    public  String limpiar(){
+        return "/RegistrarPersonal";
     }
-          public String eliminarCliente(){
-         ClienteDao dao = new ClienteDao();
-            boolean respuesta= dao.eliminarCliente(cliente);
+     public  void selectBandera(){
+        banderaSelect=true;
+    }
+    public String eliminarPersonal(){
+         PersonalDao dao = new PersonalDao();
+            boolean respuesta= dao.eliminarPersonal(personal);
             if(respuesta){
                 
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Correcto","Registro Borrado con exito"));
             }else{
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error","No se pudo eliminar"));
             }
-            return "/index.xhtml";
+            return "/RegistrarPersonal";
         
     }
+
+    public boolean isBanderaSelect() {
+        return banderaSelect;
+    }
+
+    public void setBanderaSelect(boolean banderaSelect) {
+        this.banderaSelect = banderaSelect;
+    }
+    
 }

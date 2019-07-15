@@ -13,8 +13,7 @@
     </h:head>
 
     <h:body>
-
-            <h:form>
+        <h:form>
             <div id="top" class="top">
                 <ui:insert name="top">
                     <p:megaMenu>
@@ -22,21 +21,22 @@
                             <p:column>
                                 <p:submenu label="A">
                                     <p:menuitem value="Mascota" action="/RegistrarMascota"/>
-                                    <p:menuitem value="Cliente" action="/RegistrarCliente"/>
+                                    <p:menuitem value="Cliente" action="/RCliente"/>
+                                    <p:menuitem value="Personal" action="/RPersonal"/>
                                 </p:submenu>
                             </p:column>
                         </p:submenu>
-                        <p:submenu label="Inicio">
-                        </p:submenu>
+                        <p:submenu label="Inicio"></p:submenu>
                     </p:megaMenu>
                 </ui:insert>
             </div>
+
         </h:form>
 
         <div id="content" class="center_content">
             <ui:insert name="content">Content</ui:insert>
         </div>
- <h:outputScript library="js" name="locales.js"/>
+
     </h:body>
 
 </html>

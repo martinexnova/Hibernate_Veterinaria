@@ -23,7 +23,7 @@ public class MascotaDao implements IMascota{
     @Override
     public boolean guardarMascota(Mascota mascota) {
         boolean respuesta=true;
-      Session session =HibernateUtil.geSessionFactory().openSession();
+      Session session =HibernateUtil.getSessionFactory().openSession();
      Transaction transaction=session.beginTransaction();
         try {
             session.save(mascota);
@@ -38,18 +38,19 @@ public class MascotaDao implements IMascota{
 
     @Override
     public ArrayList<Mascota> listarMascota() {
-          Session session =HibernateUtil.geSessionFactory().openSession();
+          Session session =HibernateUtil.getSessionFactory().openSession();
           ArrayList<Mascota> milista=new ArrayList<>();
         Query query=session.createQuery("FROM Mascota");
         //ejecutar la consulta y obtener la listaz
         milista=(ArrayList<Mascota>) query.list();
+        session.close();
         return milista;
     }
 
     @Override
     public boolean actualizar(Mascota mascota) {
         
-         Session session =HibernateUtil.geSessionFactory().openSession();
+         Session session =HibernateUtil.getSessionFactory().openSession();
         
             boolean respuesta= true;
         
@@ -60,6 +61,7 @@ public class MascotaDao implements IMascota{
         transaccion.commit();
         } catch (Exception e) {
             respuesta = false;
+            System.out.println("ERORORR"+e);
         }
         session.close();
         return respuesta;
@@ -95,7 +97,7 @@ public class MascotaDao implements IMascota{
     @Override
     public boolean eliminar(Mascota mascota) {
         boolean respuesta = true;
-         Session session =HibernateUtil.geSessionFactory().openSession();
+         Session session =HibernateUtil.getSessionFactory().openSession();
         Transaction transaccion = session.beginTransaction();
         try {
             session.delete(mascota);

@@ -26,7 +26,7 @@ public class pueba4 {
 
         MascotaDao mascotadao = new MascotaDao();
 
-         Session sesions =HibernateUtil.geSessionFactory().openSession();
+         Session sesions =HibernateUtil.getSessionFactory().openSession();
 
         lista = mascotadao.listarRaza(sesions);
         //System.out.println("ID\t"+"NOMBRE MASCOTA\t"+"NOMBRE CLIENTE\t"+"RAZA");

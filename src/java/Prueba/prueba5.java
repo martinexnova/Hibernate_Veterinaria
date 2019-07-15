@@ -26,7 +26,7 @@ public class prueba5 {
 
         MascotaDao mascotadao = new MascotaDao();
 
-   Session sesion =HibernateUtil.geSessionFactory().openSession();
+   Session sesion =HibernateUtil.getSessionFactory().openSession();
 
         lista = mascotadao.listarNombreMascota(sesion);
        // System.out.println("ID\t"+"NOMBRE MASCOTA\t"+"NOMBRE CLIENTE\t"+"RAZA");

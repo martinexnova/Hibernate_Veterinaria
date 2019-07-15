@@ -28,7 +28,7 @@
                                 <p:outputLabel value="ID"/>
                             </p:column>
                             <p:column>
-                                <p:inputText value="#{MascotaBean.mascota.idMascota}" />
+                                <p:inputText value="#{mascotaBean.mascota.idMascota}" />
                             </p:column>
                         </p:row>
                         <p:row>
@@ -36,7 +36,7 @@
                                 <p:outputLabel value="Nombre  Mascota"/>
                             </p:column>
                             <p:column>
-                                <p:inputText value="#{MascotaBean.mascota.nombreMascota}" />
+                                <p:inputText value="#{mascotaBean.mascota.nombreMascota}" />
                             </p:column>
                         </p:row>
                         <p:row>
@@ -44,7 +44,7 @@
                                 <p:outputLabel value="Nombre  Cliente"/>
                             </p:column>
                             <p:column>
-                                <p:inputText value="#{MascotaBean.mascota.nombreCliente}" />
+                                <p:inputText value="#{mascotaBean.mascota.nombreCliente}" />
                             </p:column>
                         </p:row>
                         <p:row>
@@ -52,18 +52,18 @@
                                 <p:outputLabel value="Raza"/>
                             </p:column>
                             <p:column>
-                                <p:inputText value="#{MascotaBean.mascota.raza}"/>
+                                <p:inputText value="#{mascotaBean.mascota.raza}"/>
                             </p:column>
                         </p:row>
                         </p:panelGrid>
-                    <p:commandButton value="Enviar" action="#{MascotaBean.guardarMascota()}" update=":formdata:datatable,:form"/>
-                    <p:commandButton value="Actualizar" action="#{MascotaBean.actualizarMascota()}" update=":formdata:datatable,:form"/>
-                    <p:commandButton value="Nuevo" action="#{MascotaBean.limpiar()}" update=":form"/>
+                    <p:commandButton value="Enviar"  rendered="#{!mascotaBean.banderSelect}" action="#{mascotaBean.guardarMascota()}" update=":formdata:datatable,:form"/>
+                    <p:commandButton value="Actualizar"  rendered="#{mascotaBean.banderSelect}" action="#{mascotaBean.actualizarMascota()}" update=":formdata:datatable,:form"/>
+                    <p:commandButton value="Nuevo" action="#{mascotaBean.limpiar()}" update=":form"/>
                 </p:panel>
             </h:form>
             <h:form id="formdata">
-                <p:dataTable  rowKey="#{mascota.idMascota}" selection="#{MascotaBean.mascota}"  selectionMode="single" id="datatable" style="width: 40%" var="mascota" value="#{MascotaBean.listar()}">
-                    <p:ajax event="rowSelect" update=":form"/>
+                <p:dataTable  rowKey="#{mascota.idMascota}" selection="#{mascotaBean.mascota}"  selectionMode="single" id="datatable" style="width: 40%" var="mascota" value="#{mascotaBean.listarMascotas()}">
+                    <p:ajax event="rowSelect" update=":form" listener="#{mascotaBean.selectBandera()}"/>
                     <p:column headerText="ID:">
 
                         <p:outputLabel value="#{mascota.idMascota}"/>
@@ -79,23 +79,23 @@
                     </p:column>
                     <p:column headerText="action">
                         <p:commandButton value="ELIMINAR"  onclick="PF('dlgEliminar').show();" update=":formEliminar" >
-                            <f:setPropertyActionListener  target="#{MascotaBean.mascota}" value="#{mascota}"/>
+                            <f:setPropertyActionListener  target="#{mascotaBean.mascota}" value="#{mascota}"/>
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>
 
             </h:form>
-            <p:dialog id="dlg" header="Eliminar datos" widgetVar="dlgEliminar"  showEffect="explode" hideEffect="explode" modal="true">
+           
+        </div>
+         <p:dialog id="dlg" header="Eliminar datos" widgetVar="dlgEliminar"  showEffect="explode" hideEffect="explode" modal="true">
 
             <h:form id="formEliminar" style="text-align: center">
                 <h:outputText value="deseas eliminar"  />
-                <p:commandButton value="si" actionListener="#{MascotaBean.eliminarMascota()}" update=":formdata:datatable" oncomplete="PF('dlgEliminar').hide();"/>
+                <p:commandButton value="si" actionListener="#{mascotaBean.eliminar()}" update=":formdata:datatable" oncomplete="PF('dlgEliminar').hide();"/>
                 <p:commandButton value="no" onclick="PF('dlgEliminar').hide();"/>
             </h:form>
 
         </p:dialog>
-        </div>
-        
          </ui:define>
 
         </ui:composition>
